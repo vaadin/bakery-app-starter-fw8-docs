@@ -1,0 +1,12 @@
+== Running, building and packaging.
+
+=== Running the first time
+After downloading and extracting the zip package, it is recommended to run the software once and see that it is working.
+
+You can start up the project, for the first time and while developing, from the terminal with the help of Maven command `mvn spring-boot:run`. You can also use any IDE with Maven integration to run the `spring-boot:run` goal.
+
+=== Building the package
+To build the project, the standard `maven install` command can be used. This will produce a deployable, self containing jar in the target package
+
+=== Running integration tests
+[red background-yellow]*This will be under a separate profile in the future. Today it is under mvn install.*
