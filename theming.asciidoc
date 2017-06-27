@@ -1,3 +1,9 @@
+---
+title: Theming, styling, look and feel
+order: 4
+layout: page
+---
+
 == Theming, styling, look and feel
 
 This chapter covers how to adjust the visual look of your application, including styles, icons, homescreen icons, and some other customisations for mobile.

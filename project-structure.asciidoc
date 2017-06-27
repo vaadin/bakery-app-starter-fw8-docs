@@ -1,3 +1,9 @@
+---
+title: Project structure
+order: 6
+layout: page
+---
+
 == Project Structure
 
 ----

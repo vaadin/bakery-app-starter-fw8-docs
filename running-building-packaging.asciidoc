@@ -1,3 +1,9 @@
+---
+title: Running, building and packaging
+order: 2
+layout: page
+---
+
 == Running, building and packaging.
 
 === Running the first time

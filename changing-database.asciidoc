@@ -1,3 +1,9 @@
+---
+title: Changing database
+order: 5
+layout: page
+---
+
 == Changing database
 
 Bakery comes builds on top of Spring Boot, which comes bundled with an in-memory H2 database. You can change which database is in use by adding the correct dependencies for the your database and modifying the application properties file.
@@ -13,7 +19,7 @@ The corresponding connector for you database needs to be available to be able to
 </dependency>
 ```
 
-== Configure application to use database. 
+== Configure application to use database.
 
 Application can be configured in src/main/resources/application.properties. You can configure the database with the following properties.
 
@@ -26,9 +32,9 @@ spring.datasource.password=
 
 Here the url to database is given with `spring.datasource.url` Spring Boot can most often deduce which database you have in use from the url and you don't have to explicitely specify it. If for some reason you need to have control of them, you can also add `spring.datasource.driver-class-name=com.mysql.jdbc.Driver` and `spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect`.
 
-`spring.jpa.hibernate.ddl-auto` defines if the application should be set up when the application starts. The valid options are none, update, create and create-drop. 
+`spring.jpa.hibernate.ddl-auto` defines if the application should be set up when the application starts. The valid options are none, update, create and create-drop.
 
-* `none` does not modify database in any way on application start-up. 
+* `none` does not modify database in any way on application start-up.
 * `update` tries to modify an existing schema to match the one defined by the application without deleting old data.
 * `create` creates the database if one doesn't exist from before, but doesn't modify an existing database in any way.
 * `create-drop` always deletes any existing database and create it again from scratch.

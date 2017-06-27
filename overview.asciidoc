@@ -1,3 +1,9 @@
+---
+title: Overview
+order: 1
+layout: page
+---
+
 = Bakery App Starter for FW8 and Spring
 
 Bakery is an App Starter to give you a head start building your business application based on Vaadin Framework 8 and Spring.
