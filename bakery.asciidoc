@@ -6,6 +6,8 @@ include::overview.asciidoc[]
 
 include::running-building-packaging.asciidoc[]
 
-include::project-structure.asciidoc[]
-
 include::adding-a-view.asciidoc[]
+
+include::theming.asciidoc[]
+
+include::changing-database.asciidoc[]

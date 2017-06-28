@@ -4,19 +4,19 @@ order: 3
 layout: page
 ---
 
-== Adding a View
+== Adding a view
 
-We're going to create a new view and add it to the navigation, step-by-step. The view we are creating here is an "About" view.
+In the following, we're going to create a new view and add it to the navigation, step-by-step. The view we are creating here is an "About" view.
 
-=== Creating a Design
+=== Creating a design
 
-The views of bakery are built with Designer. We start off by creating a new design file. Bakery uses a convention that each main view has it's own package. We create a new package called `about` inside the `ui.view` package and within it a new design called `AboutViewDesign`.
+The views of bakery are built with Designer. We start off by creating a new design file. Bakery uses a convention that each main view has it's own package. We create a new package `com.vaadin.starter.bakery.ui.view.about` and within it a new design called AboutViewDesign.
 
 image::img/new-design.png[Adding a new design file]
 
-=== Creating the View for the Design
+=== Extending design to concrete View
 
-Creating a design will create a HTML design file in the resource package as well as generated Java class in the java package. We then create a class called `AboutView` in the same packagem and extend the generated Design Java file. We extend the generated class because it is regenerated whenever the design is modified and if we edit the generated file, our changes would be removed when the file is regenerated. The  `AboutView` is the class that will be initialized when the user wants to enter the view.
+Creating a design will create a HTML design file in the resource package as well as generated Java class in the java package. Create a Class called `AboutView` in the same package which extends the generated design package. We extend the generated class because the generated class is regenerated when the design is edited and it would remove our changes. The extending `AboutView` is the class that will be initialized when the user wants to enter the view.
 
 ```java
 package com.vaadin.starter.bakery.ui.view.about;
@@ -27,47 +27,52 @@ public class AboutView extends AboutViewDesign {
 
 Any logic or configuration that you want to add into the view goes here.
 
-=== Including the View in the Application
+=== Adding the view to the application
 
-We have to tell Spring that `AboutView` is a valid view to be shown in the application. The is done by annotating the class with `@SpringView` and implementing `View`.
+We have to tell Spring that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` and implementing NavigableView.
 
 ```java
 package com.vaadin.starter.bakery.ui.view.about;
 
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.starter.bakery.ui.view.NavigableView;
 
 @SpringView(name = "about")
-public class AboutView extends AboutViewDesign implements View {
+public class AboutView extends AboutViewDesign implements NavigableView {
 
+    @Override
+    public void enter(ViewChangeEvent viewChangeEvent) {
+    }
 }
 ```
 
-`@SpringView` tells Spring that this is a view which should be associated with a URI fragment. The name parameter defines the URL for the view, for example https://www.myapplication.com/#!about. If we leave out the name parameter, the URL will be deduced from the class name by removing the `View` suffix.
+`@SpringView` tells Spring that this is a valid view to initialize as a view. The name parameter is what is used in the url for the view, for example _myapplication.com/#!about_.
 
-If you want to execute some code when the user enters the view, you can override the  `enter(ViewChangeEvent)` method in the `View` interface. This is an easy place to for example update/refresh data.
+`NavigableView` requires you to implement the `enter(ViewChangeEvent)`. This method is called whenever the user is navigates to the view and is an easy place to for example update data. If you don't want to do anything when the user enters the view, then you can leave the implementation empty.
 
-The view is now accessible by going to the url http://localhost:8080/#!about. It is however not included in the menu yet.
+The view is now accessible by going to the url http://localhost:8080/#!about. However, it does not appear in the menu yet.
 
 image::img/about-view-not-in-menu.png[About view available, but not in menu.]
 
-=== Adding the View to the Menu
+=== Adding the view to the menu
 
-To modify the menu, we want to first open the main layout design, `MainViewDesign`, in the `view` package. We want to add a new Button into the 'menu' layout. The easiest way to do this is to select the last menu button and pressing copy paste on it (ctrl+c -> ctrl+v). This will add a copy of the menu button with same icon and caption. We can change these in the properties panel. You want to change `Name`, `Icon`, `Caption` and `DomId` to match your new view. Next to the `Icon` field  is a handy button which will show you the  icons and allow you to select a new one visually.
+To modify the menu, we want to first open the main layout design, `MainViewDesign` in the view package. We want to add a new Button into the 'menu' layout. The easiest way to do this is select the last view and pressing copy paste on it (ctrl+c -> ctrl+v). This will add a copy of the menu button with same icon and caption. Let's change those. In the properties panel, you want to change Name, Icon, Caption and DomId to match your new view. Next to icon is a handy button where you see the icons and select a new one visually. The list contains all the built-in font-icons from link:https://vaadin.com/icons[Vaadin Icons].
+
+TIP: Refer to link:https://vaadin.com/docs/-/part/designer/designer-overview.html[Vaadin Designer documentation] to learn more about visually designing your UI.
 
 image::img/about-to-menu-designer.png[About added to the menu.]
 
-The button is now in the menu but it still doesn't do anything. The event handlers are wired in the `MainView` class in the `ui.view.MainView` Java package. We can make the "About the app" button navigate to the `AboutView` by modifying the `init()` method:
+The button is now in the menu but it still doesn't do anything. Let's go to the concrete implementation of the view to change that, `ui.view.MainView` in the java package. In the `populateMenu()` let's configure clicks to the "About the app"-button to navigate to the AboutView.
 
 ```java
-public void init() {
+public void populateMenu() {
 	attachNavigation(storefront, StorefrontView.class);
 	attachNavigation(dashboard, DashboardView.class);
 	attachNavigation(users, UserAdminView.class);
 	attachNavigation(products, ProductAdminView.class);
 	attachNavigation(about, AboutView.class);
-
-	logout.addClickListener(e -> logout());
+	logout.addClickListener(e -> presenter.logout());
 }
 ```
 
@@ -75,15 +80,15 @@ Now we have the view in the menu as well and the user can navigate to it. That's
 
 image::img/about-in-menu.png[About view ready.]
 
-=== Restricting Access to the View.
+=== Restricting access to the view.
 
-If you want to secure some views of the app, you can require the user to have certain roles by adding an annotation to the `View` implementation.
+If you want to restrict access to some views, you can require the user to have certain roles by adding an annotation. Restricting access to the About-view might not make much sense usually, but we'll do it anyway:
 
 ```java
 @SpringView(name = "about")
 @Secured(Role.ADMIN)
-public class AboutView extends AboutViewDesign implements View {
+public class AboutView extends AboutViewDesign implements NavigableView {
   ...
 ```
 
-`@Secured(Role.ADMIN)` will require that the user that is logged in has the `ADMIN` role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get an "Access denied" message if she tries to access it with a direct URL or otherwise.
+`@Secured(Role.ADMIN)` will require that the user that is logged in has the ADMIN role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get a "Access denied" if she tries to access it with a direct URL or otherwise.
