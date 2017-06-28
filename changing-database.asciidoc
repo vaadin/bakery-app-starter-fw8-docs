@@ -1,9 +1,10 @@
 ---
 title: Changing database
-order: 5
+order: 6
 layout: page
 ---
 
+[[changing-database]]
 == Changing database
 
 Bakery comes builds on top of Spring Boot, which comes bundled with an in-memory H2 database. You can change which database is in use by adding the correct dependencies for the your database and modifying the application properties file.
