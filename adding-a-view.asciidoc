@@ -10,13 +10,13 @@ In the following, we're going to create a new view and add it to the navigation,
 
 === Creating a design
 
-The views of bakery are built with Designer. We start off by creating a new design file. Bakery uses a convention that each main view has it's own package. We create a new package `com.vaadin.starter.bakery.ui.view.about` and within it a new design called AboutViewDesign.
+The views of bakery are built with Designer. We start off by creating a new design file. Bakery uses a convention that each main view has it's own package. We create a new package called `about` inside the `ui.view` package and within it a new design called `AboutViewDesign`.
 
 image::img/new-design.png[Adding a new design file]
 
-=== Extending design to concrete View
+=== Creating the View for the Design
 
-Creating a design will create a HTML design file in the resource package as well as generated Java class in the java package. Create a Class called `AboutView` in the same package which extends the generated design package. We extend the generated class because the generated class is regenerated when the design is edited and it would remove our changes. The extending `AboutView` is the class that will be initialized when the user wants to enter the view.
+Creating a design will create a HTML design file in the resource package as well as generated Java class in the java package. We then create a class called `AboutView` in the same package and extend the generated Design Java file. We extend the generated class because it is regenerated whenever the design is modified and if we edit the generated file, our changes would be removed when the file is regenerated. The `AboutView` is the class that will be initialized when the user wants to enter the view.
 
 ```java
 package com.vaadin.starter.bakery.ui.view.about;
@@ -27,9 +27,9 @@ public class AboutView extends AboutViewDesign {
 
 Any logic or configuration that you want to add into the view goes here.
 
-=== Adding the view to the application
+=== Including the view to the application
 
-We have to tell Spring that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` and implementing NavigableView.
+We have to tell Spring that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` and implementing `View`.
 
 ```java
 package com.vaadin.starter.bakery.ui.view.about;
@@ -39,7 +39,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.starter.bakery.ui.view.NavigableView;
 
 @SpringView(name = "about")
-public class AboutView extends AboutViewDesign implements NavigableView {
+public class AboutView extends AboutViewDesign implements View {
 
     @Override
     public void enter(ViewChangeEvent viewChangeEvent) {
@@ -47,9 +47,9 @@ public class AboutView extends AboutViewDesign implements NavigableView {
 }
 ```
 
-`@SpringView` tells Spring that this is a valid view to initialize as a view. The name parameter is what is used in the url for the view, for example _myapplication.com/#!about_.
+`@SpringView` tells Spring that this is a view which should be associated with a URI fragment. The name parameter defines the URL for the view for the view, for example _https://www.myapplication.com/#!about._. If we leave out the name parameter, the URL will be deduced from the class name by removing the `View` suffix.
 
-`NavigableView` requires you to implement the `enter(ViewChangeEvent)`. This method is called whenever the user is navigates to the view and is an easy place to for example update data. If you don't want to do anything when the user enters the view, then you can leave the implementation empty.
++If you want to execute some code when the user enters the view, you can override the  `enter(ViewChangeEvent)` method in the `View` interface. This is an easy place to for example update/refresh data.
 
 The view is now accessible by going to the url http://localhost:8080/#!about. However, it does not appear in the menu yet.
 
@@ -63,16 +63,17 @@ TIP: Refer to link:https://vaadin.com/docs/-/part/designer/designer-overview.htm
 
 image::img/about-to-menu-designer.png[About added to the menu.]
 
-The button is now in the menu but it still doesn't do anything. Let's go to the concrete implementation of the view to change that, `ui.view.MainView` in the java package. In the `populateMenu()` let's configure clicks to the "About the app"-button to navigate to the AboutView.
+The button is now in the menu but it still doesn't do anything. The event handlers are wired in the `MainView` class in the `ui.view.MainView` Java package. We can make the "About the app" button navigate to the `AboutView` by modifying the `init()` method:
 
 ```java
-public void populateMenu() {
+public void init() {
 	attachNavigation(storefront, StorefrontView.class);
 	attachNavigation(dashboard, DashboardView.class);
 	attachNavigation(users, UserAdminView.class);
 	attachNavigation(products, ProductAdminView.class);
 	attachNavigation(about, AboutView.class);
-	logout.addClickListener(e -> presenter.logout());
+
+  logout.addClickListener(e -> logout());
 }
 ```
 
@@ -87,8 +88,8 @@ If you want to restrict access to some views, you can require the user to have c
 ```java
 @SpringView(name = "about")
 @Secured(Role.ADMIN)
-public class AboutView extends AboutViewDesign implements NavigableView {
+public class AboutView extends AboutViewDesign implements View {
   ...
 ```
 
-`@Secured(Role.ADMIN)` will require that the user that is logged in has the ADMIN role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get a "Access denied" if she tries to access it with a direct URL or otherwise.
+`@Secured(Role.ADMIN)` will require that the user that is logged in has the ADMIN role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get an "Access denied" message if she tries to access it with a direct URL or otherwise.
