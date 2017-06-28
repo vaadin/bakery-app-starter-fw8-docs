@@ -11,3 +11,5 @@ include::adding-a-view.asciidoc[]
 include::theming.asciidoc[]
 
 include::changing-database.asciidoc[]
+
+include::going-to-production.asciidoc[]
