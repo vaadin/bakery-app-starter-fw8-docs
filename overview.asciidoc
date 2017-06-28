@@ -19,6 +19,11 @@ image::img/overview.png[Bakery on different devices,250,align=center]
 === Full stack architecture
 Bakery architecture is built to give a full opinionated working stack with all the technologies changed out. Every project has however their own needs and each stack doesn't fit in to every project. If the default stack is not a perfect fit for your needs, you can switch out the technologies to match your requirements better.
 
+Bakery is using the Spring stack by default, with Spring Data taking care of the database, Spring Security managing authentication and authorization and Spring boot helps in packaging, configuring and running. An H2 database is added so that you can run the software directly with zero configuration and it can easily be replaced for your production database. Vaadin Designer has been used to build all UIs and the application is tested with Vaadin TestBench. Gatling, along with TestBench is used to perform scalability tests on the system.
+
+.Architecture diagram
+image::img/architecture-diagram.png[Bakery Architecture diagram]
+
 === Declarative, mobile-first views
 
 Views are built with Vaadin Framework 8 with the help of Vaadin Designer. Each view is built responsively, mobile-first. Vaadin Designer enables you to build the views visually and in a very fast and productive way. The views that are bundled show paradigms on how to create certain types of view and serve as bases for your own views.
