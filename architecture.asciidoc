@@ -49,6 +49,9 @@ Vaadin Designer naturally splits out all the layout configuration into the Desig
 
 For some application components, the split between layout and logic is not enough to deal with the complexity. There are a couple of cases in this app starter when this split just did not make the code readable and understandable. The view where you create/edit an order and the CRUD views for users and products will still be hard to read when you have split out the layout code as there is simply quite much logic code. In these cases, the MVP pattern (or a variant thereof) has been utilized so that pure business logic goes into a `presenter` class and UI related logic goes into a `view` class (there is no `model` class as the model is so simple in all the cases).
 
+[NOTE]
+Do not confuse the "V" in MVP with a `View` in Vaadin. The "V" in MVP stands for the UI part of the component while a `View` in Vaadin stands for something which has a URL and can be navigated to. You can build an application component using MVP even though the component is not a Vaadin `View`.
+
 In the cases the MVP pattern is utilized, the view decides which components to use and how to lay them out (the Design file is considered as part of the view). The view also wires event listeners, configures how fields are bound and what validators to use in the UI (validators are UI level helpers, the real data validation takes place in the service layer).
 
 The presenter is the one aware of the service layer (view is not), deals with what should happen on view events and also handles navigation to/from views.
