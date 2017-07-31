@@ -16,11 +16,11 @@ The app starter is a layered application, where the service layer knows how to d
 The service layer is separated from the UI layer for multiple reasons. The most pertinent one is to avoid creating messy UI code.
 
 The service layer is responsible for providing data to the UI layer for showing to the end user, and for handling updates to the data based on actions the end user performs in the application.
-It hides the data layer implementation details, e.g. Spring Data in this app starter, from the UI so the UI can use understandable and descriptive high level methods. In addition to making the UI code easy to read, this provides a logical place to handle transaction boundaries, data level access control (not implemented in this app starter) and other database related concepts.
+It hides the data layer implementation details, e.g. Spring/Deltaspike Data in this app starter, from the UI so the UI can use understandable and descriptive high level methods. In addition to making the UI code easy to read, this provides a logical place to handle transaction boundaries, data level access control (not implemented in this app starter) and other database related concepts.
 
 While the service layer in this app starter is separated only using a package name, it could quite easily be extracted to a separate Maven module. The advantage of this is that you can verify you are not accidentally using the UI layer from the service layer (there should be no dependency ever in this direction). The disadvantage is that you will have a more complex project as it will become a multi module Maven project.
 
-The service layer in this app starter is built upon Spring Data and Spring repositories. Validation in the service layer is performed using bean validation and annotations on the entity classes.
+The service layer in this app starter is built upon Spring/Deltaspike Data. Validation in the service layer is performed using bean validation and annotations on the entity classes.
 
 An H2 in-memory database is used by default for easy setup and getting started. This should be swapped out for a real database before going into production, see <<changing-database>>.
 

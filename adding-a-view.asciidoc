@@ -29,7 +29,7 @@ Any logic or configuration that you want to add into the view goes here.
 
 === Including the view to the application
 
-We have to tell Spring that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` and implementing `View`.
+We have to tell the application that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` (Spring) or `@CDIView` and implementing `View`.
 
 ```java
 package com.vaadin.starter.bakery.ui.view.about;
@@ -38,7 +38,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.starter.bakery.ui.view.NavigableView;
 
-@SpringView(name = "about")
+@SpringView
 public class AboutView extends AboutViewDesign implements View {
 
     @Override
@@ -47,7 +47,7 @@ public class AboutView extends AboutViewDesign implements View {
 }
 ```
 
-`@SpringView` tells Spring that this is a view which should be associated with a URI fragment. The name parameter defines the URL for the view for the view, for example _https://www.myapplication.com/#!about._. If we leave out the name parameter, the URL will be deduced from the class name by removing the `View` suffix.
+`@SpringView` or `@CDIView` tells Vaadin that this is a view which should be associated with a URI fragment. Using a parameter for the `@SpringView(name="something")` or `@CDIView("something")` annotation we can define the URL for the view for the view, for example _https://www.myapplication.com/#!something._. If we leave out the name parameter, the URL will be deduced from the class name by removing the `View` suffix.
 
 +If you want to execute some code when the user enters the view, you can override the  `enter(ViewChangeEvent)` method in the `View` interface. This is an easy place to for example update/refresh data.
 
@@ -92,4 +92,13 @@ public class AboutView extends AboutViewDesign implements View {
   ...
 ```
 
-`@Secured(Role.ADMIN)` will require that the user that is logged in has the ADMIN role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get an "Access denied" message if she tries to access it with a direct URL or otherwise.
+or
+
+```java
+@CDIView("about")
+@RolesAllowed(Role.ADMIN)
+public class AboutView extends AboutViewDesign implements View {
+  ...
+```
+
+`@Secured(Role.ADMIN)` or `@RolesAllowed(Role.ADMIN)` will require that the user that is logged in has the ADMIN role to be able to access the view. If the user does not have the role, then the view will not be in the menu and the user will get an "Access denied" message if she tries to access it with a direct URL or otherwise.
