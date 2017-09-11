@@ -7,11 +7,11 @@ layout: page
 [[changing-database]]
 == Changing Database
 
-The app starter comes bundled with an in-memory H2 database. You can change which database is in use by adding the correct dependencies for the your database and modifying the properties file.
+The application comes bundled with an in-memory H2 database. You can change which database is in use by adding the correct dependencies for the your database and modifying the `application.properties` file (when using Spring) or configuring the server to use another database (when using JavaEE). See the sections below for more detailed information.
 
-== Adding database dependency into pom.xml
+== Configuring the Spring Application to use your Database
 
-The corresponding connector for you database needs to be available to be able to use your database of choice. For example if you use MySQL, you can add the approriate dependency to your pom.xml
+The corresponding connector for you database needs to be available to be able to use your database of choice. For example if you use MySQL, you need to add the approriate dependency to your `pom.xml`:
 
 ```
 <dependency>
@@ -21,8 +21,6 @@ The corresponding connector for you database needs to be available to be able to
    <version>6.0.4</version>
 </dependency>
 ```
-
-== Configuring the Spring Application to use your Database
 
 The database is configured in `src/main/resources/application.properties`. You can configure the database with the following properties.
 
@@ -37,17 +35,11 @@ Here the URL to the database is given using `spring.datasource.url`. Spring Boot
 
 == Configuring the JavaEE Application to use your Database
 
-The database is configured in `src/main/resources/META-INF/persistence.xml`. You can configure the database with the following properties.
+In JavaEE applications, the database is configured in the server and made available through JNDI to the application. In `src/main/resources/META-INF/persistence.xml` the database connection is configured using `<jta-data-source>BakeryDS</jta-data-source>`. The server must make a data source named `BakeryDS` available for this to work.
 
-```
-<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/dbtest" />
-<property name="javax.persistence.jdbc.user" value="someuser" />
-<property name="javax.persistence.jdbc.password" value="somepassword" />
-```
+There are configuration files in the project to setup the test database in `src/main/webapp/WEB-INF`: `resources.xml` for TomEE, `wildfly-h2-ds.xml` for Wildfly and `src/test/resources/server.xml` for Liberty. These are included only to make it easy to get started and are not meant for production. For production, you should  specify the datasource in the server itself.
 
-Here the URL to the database is given using `javax.persistence.jdbc.url` and the database driver (`com.mysql.jdbc.Driver` for MySQL) using `javax.persistence.jdbc.driver`. To control the Hibernate dialect (provided you use Hibernate), you can use `hibernate.dialect`, e.g. `<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />`.
+If you want to change the database defined in the project itself, you can update the configuration file for the server you are using. All the configuration files specify more or less the same parameters: JDBC url, driver, user and password. These need to be updated to match your database.
 
 == Automatically Updating the Database Schema
 
