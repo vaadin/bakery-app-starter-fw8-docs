@@ -30,8 +30,11 @@ TomEE 7.0.3 WebProfile and TomEE 7.0.3 plus (newest version at time of writing) 
 
 Both versions uses an H2 database so that you can run the software directly with zero configuration and it can easily be replaced for your production database. Vaadin Designer has been used to build all UIs and the application is tested with Vaadin TestBench. Gatling, along with TestBench is used to perform scalability tests on the system.
 
-.Architecture diagram
-image::img/architecture-diagram.png[Bakery Architecture diagram]
+.Architecture diagram for Spring
+image::img/architecture-diagram-spring.png[Spring Architecture diagram]
+
+.Architecture diagram for JavaEE
+image::img/architecture-diagram-javaee.png[JavaEE Architecture diagram]
 
 === Declarative, mobile-first views
 
