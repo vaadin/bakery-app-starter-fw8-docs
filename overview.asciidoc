@@ -4,9 +4,9 @@ order: 1
 layout: page
 ---
 
-= Bakery App Starter for FW8 and Spring
+= Bakery App Starter for FW8 and Spring/JavaEE
 
-Bakery is an App Starter to give you a head start building your business application based on Vaadin Framework 8 and Spring.
+Bakery is an App Starter to give you a head start building your business application based on Vaadin Framework 8 and Spring or JavaEE.
 
 It includes an end-to-end technology stack covering each layer that is needed to build a production grade application. The App Starter is opinionated and reflects Vaadin's view on what is the best way to build business applications.
 
@@ -19,10 +19,22 @@ image::img/overview.png[Bakery on different devices,250,align=center]
 === Full stack architecture
 Bakery architecture is built to give a full opinionated working stack with all the technologies changed out. Every project has however their own needs and each stack doesn't fit in to every project. If the default stack is not a perfect fit for your needs, you can switch out the technologies to match your requirements better.
 
-Bakery is using the Spring stack by default, with Spring Data taking care of the database, Spring Security managing authentication and authorization and Spring boot helps in packaging, configuring and running. An H2 database is added so that you can run the software directly with zero configuration and it can easily be replaced for your production database. Vaadin Designer has been used to build all UIs and the application is tested with Vaadin TestBench. Gatling, along with TestBench is used to perform scalability tests on the system.
+There are two versions of the app starter: One based on Spring and one based on JavaEE.
 
-.Architecture diagram
-image::img/architecture-diagram.png[Bakery Architecture diagram]
+The Spring version uses Spring Data to take care of the database, Spring Security to manage authentication and authorization and Spring boot to help in packaging, configuring and running. It runs in any Servlet 3.1 compatible server.
+
+The JavaEE version uses JPA 2.1 + Deltaspike Data to take care of the database, Shiro to manage authentication and authorization. It has been verified using Wildfly 10, TomEE 7 Plume and WebSphere Liberty but should run on any JavaEE7 compatible server with JPA 2.1 support.
+
+[NOTE]
+TomEE 7.0.3 WebProfile and TomEE 7.0.3 plus (newest version at time of writing) ship with JPA 2.0 although it otherwise supports JavaEE7. You need to use the Plume version.
+
+Both versions uses an H2 database so that you can run the software directly with zero configuration and it can easily be replaced for your production database. Vaadin Designer has been used to build all UIs and the application is tested with Vaadin TestBench. Gatling, along with TestBench is used to perform scalability tests on the system.
+
+.Architecture diagram for Spring
+image::img/architecture-diagram-spring.png[Spring Architecture diagram]
+
+.Architecture diagram for JavaEE
+image::img/architecture-diagram-javaee.png[JavaEE Architecture diagram]
 
 === Declarative, mobile-first views
 
@@ -48,7 +60,9 @@ image::img/bakery-dashboard.png[Bakery Dashboard view]
 
 === Authentication and authorization
 
-The application is protected with user login to keep your sensitive data safe. Users can have different roles defined in the application which defines what they can do within the application. The authentication and authorization is built on top of Spring Security, giving you many extensions points to configure it the way you handle security in your company.
+The application is protected with user login to keep your sensitive data safe. Users can have different roles defined in the application which defines what they can do within the application.
+
+In the Spring version, the authentication and authorization is built on top of Spring Security. In the JavaEE version, Shiro is used for the same purpose. Both offer you many extensions points so you can configure it the way you handle security in your company.
 
 .Bakery Login screen
 image::img/bakery-login.png[Bakery Login screen]
@@ -66,14 +80,6 @@ We have tested the application's performance. Download the http://v.vaadin.com/h
 === Service layer
 
 Views contact a service layer which separates the UI layer from the business logic layer. The Service layer is divided to Services which is the contact point for the UI layer, and repositories that communicate with the database.
-
-=== Spring Data
-
-Database layer makes use of Spring Data, JPA and Hibernate to fetch data, with a handy API for querying. The application comes bundled with an in-memory H2 database for easy setup and getting started, along with an easy way to switch the in-memory database for a production database.
-
-=== Spring Boot
-
-The application is set up, run and packaged with the help of Spring Boot, which helps you create production-ready applications.
 
 === Maven
 
