@@ -13,7 +13,7 @@ Beanstalk is part of Amazon Web Services (AWS) and hides a lot of the complexity
 
 === Getting an Amazon Elastic Beanstalk account
 
-In order to use Amazon Elastic Beanstalk, you need to have a AWS account. Head over to https://aws.amazon.com/elasticbeanstalk to read more about he service, and create an account.
+In order to use Amazon Elastic Beanstalk, you need to have a AWS account. Head over to https://aws.amazon.com/elasticbeanstalk to read more about the service, and create an account.
 
 TIP: You will be asked to provide credit-card details before making use of AWS services, but there is a link:https://aws.amazon.com/free[free tier] that allows you to try the service for free. You can also set up a link:http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-alarms.html[billing alarm] to ensure you don't accidentally exceed the free tier limits (or any other spending budget you might have.)
 
@@ -32,7 +32,7 @@ When going to production, you want to make sure your Vaadin application is in pr
 
 === Configuring a Production Database
 
-To be able to use another database, you first need to add the appropriate JDBC diver as a dependency in `pom.xml`, e.g for MySQL:
+To be able to use another database, you first need to add the appropriate JDBC driver as a dependency in `pom.xml`, e.g for MySQL:
 ```
 <dependency>
   <groupId>mysql</groupId>

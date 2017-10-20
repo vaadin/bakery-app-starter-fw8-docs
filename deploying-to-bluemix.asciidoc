@@ -21,7 +21,7 @@ TIP: These deployment instructions are based on a free 30-day account for Bluemi
 The provided `manifest.yml` file will automatically set your Vaadin application to run in production mode by specifying `-Dvaadin.productionMode=true` for the server.
 
 === Configuring a Production Database
-The database configuration is defined in `src/main/resources/META-INF/persistence.xml`. By default, the application uses a JTA data source named `BakeryDS`and looks it up through standard JNDI. There is no need to change this as long as you create a database using the same identifier in Bluemix (see below).
+The database configuration is defined in `src/main/resources/META-INF/persistence.xml`. By default, the application uses a JTA data source named `BakeryDS` and looks it up through standard JNDI. There is no need to change this as long as you create a database using the same identifier in Bluemix (see below).
 
 What you need to change to avoid dropping and re-creating your production database on each redeploy, is to remove
 ```
