@@ -4,17 +4,17 @@ order: 4
 layout: page
 ---
 
-== Adding a view
+= Adding a view
 
 In the following, we're going to create a new view and add it to the navigation, step-by-step. The view we are creating here is an "About" view.
 
-=== Creating a design
+== Creating a design
 
 The views of bakery are built with Designer. We start off by creating a new design file. Bakery uses a convention that each main view has it's own package. We create a new package called `about` inside the `ui.view` package and within it a new design called `AboutViewDesign`.
 
 image::img/new-design.png[Adding a new design file]
 
-=== Creating the View for the Design
+== Creating the View for the Design
 
 Creating a design will create a HTML design file in the resource package as well as generated Java class in the java package. We then create a class called `AboutView` in the same package and extend the generated Design Java file. We extend the generated class because it is regenerated whenever the design is modified and if we edit the generated file, our changes would be removed when the file is regenerated. The `AboutView` is the class that will be initialized when the user wants to enter the view.
 
@@ -27,7 +27,7 @@ public class AboutView extends AboutViewDesign {
 
 Any logic or configuration that you want to add into the view goes here.
 
-=== Including the view to the application
+== Including the view to the application
 
 We have to tell the application that `AboutView` is a valid view to be shown in the application. This is achived by annotating the class with `@SpringView` (Spring) or `@CDIView` and implementing `View`.
 
@@ -55,7 +55,7 @@ The view is now accessible by going to the url http://localhost:8080/#!about. Ho
 
 image::img/about-view-not-in-menu.png[About view available, but not in menu.]
 
-=== Adding the view to the menu
+== Adding the view to the menu
 
 To modify the menu, we want to first open the main layout design, `MainViewDesign` in the view package. We want to add a new Button into the 'menu' layout. The easiest way to do this is select the last view and pressing copy paste on it (ctrl+c -> ctrl+v). This will add a copy of the menu button with same icon and caption. Let's change those. In the properties panel, you want to change Name, Icon, Caption and DomId to match your new view. Next to icon is a handy button where you see the icons and select a new one visually. The list contains all the built-in font-icons from link:https://vaadin.com/icons[Vaadin Icons].
 
@@ -81,7 +81,7 @@ Now we have the view in the menu as well and the user can navigate to it. That's
 
 image::img/about-in-menu.png[About view ready.]
 
-=== Restricting access to the view.
+== Restricting access to the view.
 
 If you want to restrict access to some views, you can require the user to have certain roles by adding an annotation. Restricting access to the About-view might not make much sense usually, but we'll do it anyway:
 

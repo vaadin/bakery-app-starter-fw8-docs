@@ -5,7 +5,7 @@ layout: page
 ---
 
 [[changing-database]]
-== Changing Database
+= Changing Database
 
 The application comes bundled with an in-memory H2 database. You can change which database is in use by adding the correct dependencies for the your database and modifying the `application.properties` file (when using Spring) or configuring the server to use another database (when using JavaEE). See the sections below for more detailed information.
 
